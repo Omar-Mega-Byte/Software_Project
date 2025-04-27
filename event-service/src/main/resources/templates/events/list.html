@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">Event Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #2B4A8F 0%, #1A1A1A 80%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .glassmorphic-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-title {
+            background: linear-gradient(to right, #FF6B6B, #FF8E53);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .search-input {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .create-event-btn {
+            background: linear-gradient(to right, #FF6B6B, #FF8E53);
+            transition: transform 0.3s ease;
+        }
+
+        .create-event-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .table-row {
+            transition: all 0.3s ease;
+        }
+
+        .table-row:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.01);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-badge.active {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .status-badge.canceled {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .action-link {
+            transition: all 0.3s ease;
+        }
+
+        .action-link:hover {
+            transform: translateX(4px);
+            color: #FF6B6B;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body class="p-8">
+<div class="max-w-7xl mx-auto">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-5xl font-bold header-title flex items-center space-x-3 animate-fadeIn">
+            <i class="fas fa-calendar-alt text-white"></i>
+            <span>Event Manager</span>
+        </h1>
+
+        <div class="search-container w-96">
+            <div class="relative">
+                <input type="text" id="searchInput"
+                       class="search-input w-full py-3 px-4 pl-12 rounded-lg placeholder-white/70 outline-none"
+                       placeholder="Search events...">
+                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-white/70"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-8 flex justify-end">
+        <a href="/events/create" class="create-event-btn text-white py-3 px-8 rounded-lg font-medium inline-flex items-center">
+            <i class="fas fa-plus-circle mr-2"></i>
+            Create Event
+        </a>
+    </div>
+
+    <div class="glassmorphic-container overflow-hidden">
+        <table class="min-w-full">
+            <thead class="border-b border-white/20">
+            <tr class="text-white/90">
+                <th class="px-6 py-4 text-left text-sm font-semibold">Title</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold">Date</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold">Location</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold">Seats</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold">Status</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="event : ${events}" class="table-row border-b border-white/20">
+                <td class="px-6 py-4" th:text="${event.title}"></td>
+                <td class="px-6 py-4" th:text="${#temporals.format(event.dateTime, 'MMM dd, yyyy hh:mm a')}"></td>
+                <td class="px-6 py-4" th:text="${event.location}"></td>
+                <td class="px-6 py-4" th:text="${event.availableSeats}"></td>
+                <td class="px-6 py-4">
+                            <span th:text="${event.isCanceled ? 'Canceled' : 'Active'}"
+                                  th:class="${event.isCanceled ? 'status-badge canceled' : 'status-badge active'}">
+                            </span>
+                </td>
+                <td class="px-6 py-4">
+                    <div class="flex space-x-4">
+                        <a th:href="@{'/events/' + ${event.id}}" class="action-link text-white/80">
+                            <i class="fas fa-eye mr-1"></i> View
+                        </a>
+                        <a th:href="@{'/events/' + ${event.id} + '/edit'}" class="action-link text-white/80">
+                            <i class="fas fa-edit mr-1"></i> Edit
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                const title = row.cells[0].textContent.toLowerCase();
+                const location = row.cells[2].textContent.toLowerCase();
+
+                if (title.includes(searchTerm) || location.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

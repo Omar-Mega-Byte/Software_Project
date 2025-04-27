@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        }
+
+        .card-container {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-out;
+            transition: transform 0.3s ease;
+        }
+
+        .card-container:hover {
+            transform: translateY(-4px);
+        }
+
+        .highlight {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .button-edit, .button-cancel {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button-edit {
+            background: linear-gradient(to right, #facc15, #eab308);
+        }
+
+        .button-cancel {
+            background: linear-gradient(to right, #ef4444, #dc2626);
+        }
+
+        .button-edit:hover, .button-cancel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-edit::after, .button-cancel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .button-edit:hover::after, .button-cancel:hover::after {
+            left: 100%;
+        }
+
+        .header-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .header-icon:hover {
+            transform: scale(1.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .card-container {
+                margin: 0 1rem;
+            }
+
+            .button-edit, .button-cancel {
+                display: block;
+                width: 100%;
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-4xl md:text-5xl font-bold text-blue-800 text-center mb-8 flex items-center justify-center animate-fadeIn">
+        <i class="fas fa-info-circle mr-3 text-blue-500 header-icon"></i>Event Details
+    </h1>
+
+    <div class="card-container p-8">
+        <div class="mb-6">
+            <h2 class="text-3xl font-semibold text-gray-700 flex items-center">
+                <i class="fas fa-heading mr-2 text-blue-500 header-icon"></i>
+                Title: <span th:text="${event.title}" class="highlight ml-2"></span>
+            </h2>
+        </div>
+
+        <div class="mb-4 text-lg flex items-start">
+            <strong class="flex items-center"><=>
+                <i class="fas fa-align-left mr-2 text-blue-500 header-icon"></i>Description:
+            </strong>
+            <span th:text="${event.description}" class="ml-2"></span>
+        </div>
+        <div class="mb-4 text-lg flex items-center">
+            <strong class="flex items-center">
+                <i class="far fa-calendar-alt mr-2 text-blue-500 header-icon"></i>Date & Time:
+            </strong>
+            <span th:text="${event.dateTime}" class="ml-2"></span>
+        </div>
+        <div class="mb-4 text-lg flex items-center">
+            <strong class="flex items-center">
+                <i class="fas fa-map-marker-alt mr-2 text-blue-500 header-icon"></i>Location:
+            </strong>
+            <span th:text="${event.location}" class="ml-2"></span>
+        </div>
+        <div class="mb-4 text-lg flex items-center">
+            <strong class="flex items-center">
+                <i class="fas fa-ticket-alt mr-2 text-blue-500 header-icon"></i>Available Seats:
+            </strong>
+            <span th:text="${event.availableSeats}" class="ml-2"></span>
+        </div>
+        <div class="mb-4 text-lg flex items-center">
+            <strong class="flex items-center">
+                <i class="fas fa-chair mr-2 text-blue-500 header-icon"></i>Max Seats:
+            </strong>
+            <span th:text="${event.maxSeats}" class="ml-2"></span>
+        </div>
+
+        <div class="mt-8 flex justify-end space-x-4">
+            <a href="/events/{id}/edit" th:href="@{'/events/' + ${event.id} + '/edit'}" class="button-edit text-white py-2 px-6 rounded-lg font-medium flex items-center">
+                <i class="fas fa-edit mr-2"></i>Edit Event
+            </a>
+            <a href="/events/{id}/cancel" th:href="@{'/events/' + ${event.id} + '/cancel'}" class="button-cancel text-white py-2 px-6 rounded-lg font-medium flex items-center">
+                <i class="fas fa-ban mr-2"></i>Cancel Event
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
