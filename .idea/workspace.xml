@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14caa814-671e-4a5f-9194-cb9c70c779ff" name="Changes" comment="على بركة الله">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/target/classes/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/target/test-classes/com/example/SE_Project/SeProjectApplicationTests.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,18 +26,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Omar-Mega-Byte"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Omar-Mega-Byte&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Omar-Mega-Byte/EventureBoot",
-    "accountId": "101415ff-898e-439d-8ec0-69f95c70c751"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Omar-Mega-Byte/EventureBoot&quot;,
+    &quot;accountId&quot;: &quot;101415ff-898e-439d-8ec0-69f95c70c751&quot;
   }
-}]]></component>
+}</component>
   <component name="JpbToolWindowState">
     <option name="isToolWindowVisible" value="false" />
   </component>
@@ -59,15 +63,18 @@
     "Maven.event-service [compile].executor": "Run",
     "Maven.event-service [install].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/d_tol/Desktop/L.3 - second term/SE2/Software_Engineering Project",
+    "last_opened_file_path": "C:/Users/d_tol/Desktop/Depi - Software Testing/Depi Automation",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "preferences.intentionPowerPack"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\d_tol\Desktop\L.3 - second term\SE2\Software_Engineering Project\user-service\src\main\resources\static\css\temp" />
       <recent name="C:\Users\d_tol\Desktop\L.3 - second term\SE2\Software_Engineering Project\event-service\src\main\resources\templates\events" />
       <recent name="C:\Users\d_tol\Desktop\L.3 - second term\SE2\Software_Engineering Project\event-service\src\main\resources" />
     </key>
