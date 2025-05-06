@@ -5,44 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14caa814-671e-4a5f-9194-cb9c70c779ff" name="Changes" comment="على بركة الله">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/test/java/com/hospital/api_gateway/ApiGatewayApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-server/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-service/src/main/java/com/example/event_service/EventServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/java/com/example/event_service/EventServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-service/src/main/java/com/example/event_service/controller/EventViewController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-service/src/main/java/com/example/event_service/service/EventService.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/java/com/example/event_service/service/EventService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-service/src/main/resources/templates/events/details.html" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/resources/templates/events/details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-service/src/main/resources/templates/events/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/resources/templates/events/form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-service/src/main/resources/templates/events/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/resources/templates/events/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/example/SE_Project/SeProjectApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/example/SE_Project/SeProjectApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/example/SE_Project/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/example/SE_Project/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/example/SE_Project/controller/AuthRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/example/SE_Project/controller/AuthRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/example/SE_Project/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/example/SE_Project/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/example/SE_Project/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/example/SE_Project/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/example/SE_Project/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/example/SE_Project/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/static/css/temp/temp.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/templates/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/target/classes/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/target/classes/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/target/classes/com/example/SE_Project/SeProjectApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/target/classes/com/example/SE_Project/SeProjectApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/target/classes/com/example/SE_Project/controller/AuthController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/target/classes/com/example/SE_Project/controller/AuthRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/target/classes/com/example/SE_Project/controller/AuthRestController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/target/classes/com/example/SE_Project/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/target/classes/com/example/SE_Project/model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/target/classes/com/example/SE_Project/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/target/classes/com/example/SE_Project/repository/UserRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/target/classes/com/example/SE_Project/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/target/classes/com/example/SE_Project/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/target/classes/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/target/classes/templates/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/target/classes/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/target/classes/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/target/classes/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/target/classes/templates/register.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +174,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745767990668</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="على بركة الله">
+      <option name="closed" value="true" />
+      <created>1746536078249</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1746536078249</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
