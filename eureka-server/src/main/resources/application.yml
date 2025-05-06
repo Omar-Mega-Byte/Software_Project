@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: eureka-server
+  cloud:
+    loadbalancer:
+      enabled: false
+
 
 eureka:
   client:

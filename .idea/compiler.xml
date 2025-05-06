@@ -8,21 +8,23 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
-        <module name="eureka-server" />
         <module name="user-service" />
+        <module name="eureka-server" />
       </profile>
-      <profile name="Annotation profile for event-service" enabled="true">
+      <profile name="Annotation profile for registration-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
+        <module name="registration-service" />
         <module name="event-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="gateway-server" target="23" />
+      <module name="register-service" target="23" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -31,6 +33,7 @@
       <module name="eureka-server" options="-parameters" />
       <module name="event-service" options="-parameters" />
       <module name="gateway-server" options="-parameters" />
+      <module name="registration-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
   </component>

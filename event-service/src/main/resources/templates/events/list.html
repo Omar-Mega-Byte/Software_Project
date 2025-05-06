@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${pageTitle}">Event Manager</title>
+    <title>Event Manager</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -40,12 +39,12 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        .create-event-btn {
+        .create-event-btn, .view-registrations-btn {
             background: linear-gradient(to right, #FF6B6B, #FF8E53);
             transition: transform 0.3s ease;
         }
 
-        .create-event-btn:hover {
+        .create-event-btn:hover, .view-registrations-btn:hover {
             transform: scale(1.05);
         }
 
@@ -112,10 +111,14 @@
         </div>
     </div>
 
-    <div class="mb-8 flex justify-end">
-        <a href="/events/create" class="create-event-btn text-white py-3 px-8 rounded-lg font-medium inline-flex items-center">
+    <div class="mb-8 flex justify-end space-x-4">
+        <a href="/events/events/create" class="create-event-btn text-white py-3 px-8 rounded-lg font-medium inline-flex items-center">
             <i class="fas fa-plus-circle mr-2"></i>
             Create Event
+        </a>
+        <a href="/api/registrations/index.html" class="view-registrations-btn text-white py-3 px-8 rounded-lg font-medium inline-flex items-center">
+            <i class="fas fa-users mr-2"></i>
+            View Registrations
         </a>
     </div>
 
@@ -131,39 +134,84 @@
                 <th class="px-6 py-4 text-left text-sm font-semibold">Actions</th>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="event : ${events}" class="table-row border-b border-white/20">
-                <td class="px-6 py-4" th:text="${event.title}"></td>
-                <td class="px-6 py-4" th:text="${#temporals.format(event.dateTime, 'MMM dd, yyyy hh:mm a')}"></td>
-                <td class="px-6 py-4" th:text="${event.location}"></td>
-                <td class="px-6 py-4" th:text="${event.availableSeats}"></td>
-                <td class="px-6 py-4">
-                            <span th:text="${event.isCanceled ? 'Canceled' : 'Active'}"
-                                  th:class="${event.isCanceled ? 'status-badge canceled' : 'status-badge active'}">
-                            </span>
-                </td>
-                <td class="px-6 py-4">
-                    <div class="flex space-x-4">
-                        <a th:href="@{'/events/' + ${event.id}}" class="action-link text-white/80">
-                            <i class="fas fa-eye mr-1"></i> View
-                        </a>
-                        <a th:href="@{'/events/' + ${event.id} + '/edit'}" class="action-link text-white/80">
-                            <i class="fas fa-edit mr-1"></i> Edit
-                        </a>
-                    </div>
-                </td>
-            </tr>
+            <tbody id="eventTableBody">
+            <!-- Events will be populated here by JavaScript -->
             </tbody>
         </table>
     </div>
 </div>
 
 <script>
+    // Function to format date
+    function formatDate(dateString) {
+        const options = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
+        return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
+    }
+
+    // Function to fetch and render events
+    async function loadEvents() {
+        try {
+            const response = await fetch('/events/api/events', {
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (!response.ok) throw new Error('Failed to fetch events');
+            const events = await response.json();
+
+            // Debug: Log the full events array
+            console.log('Events received:', events);
+
+            const tableBody = document.getElementById('eventTableBody');
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            events.forEach(event => {
+                const row = document.createElement('tr');
+                row.classList.add('table-row', 'border-b', 'border-white/20');
+
+                // Debug: Log canceled value for each event
+                console.log(`Event ${event.title}: canceled = ${event.canceled}, type = ${typeof event.canceled}`);
+
+                // Compute status badge class and text
+                const isCanceled = event.canceled === true;
+                const statusClass = isCanceled ? 'canceled' : 'active';
+                const statusText = isCanceled ? 'Canceled' : 'Active';
+
+                row.innerHTML = `
+                    <td class="px-6 py-4">${event.title || 'N/A'}</td>
+                    <td class="px-6 py-4">${formatDate(event.dateTime) || 'N/A'}</td>
+                    <td class="px-6 py-4">${event.location || 'N/A'}</td>
+                    <td class="px-6 py-4">${event.availableSeats ?? 'N/A'}</td>
+                    <td class="px-6 py-4">
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex space-x-4">
+                            <a href="/events/events/${event.id}" class="action-link text-white/80">
+                                <i class="fas fa-eye mr-1"></i> View
+                            </a>
+                            <a href="/events/events/${event.id}/edit" class="action-link text-white/80">
+                                <i class="fas fa-edit mr-1"></i> Edit
+                            </a>
+                        </div>
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        } catch (error) {
+            console.error('Error loading events:', error);
+            alert('Failed to load events. Please try again later.');
+        }
+    }
+
+    // Search functionality
     document.addEventListener('DOMContentLoaded', function() {
+        loadEvents(); // Load events on page load
+
         const searchInput = document.getElementById('searchInput');
         searchInput.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
-            const rows = document.querySelectorAll('tbody tr');
+            const rows = document.querySelectorAll('#eventTableBody tr');
 
             rows.forEach(row => {
                 const title = row.cells[0].textContent.toLowerCase();

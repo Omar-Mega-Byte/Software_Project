@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Organizer Registration</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 550px;
+        }
+        .form-container h2 {
+            text-align: center;
+            color: #0f2027;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background: #0f2027;
+            border: none;
+        }
+        .btn-primary:hover {
+            background: #203a43;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>Event Organizer Registration</h2>
+    <div id="eoError" class="alert alert-danger" style="display: none;"></div>
+    <form id="eoForm">
+        <div class="form-group">
+            <label>Email</label>
+            <input class="form-control" id="eoEmail" type="email" required>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input class="form-control" id="eoPassword" type="password" required>
+        </div>
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <input class="form-control" id="eoConfirm" type="password" required>
+        </div>
+        <div class="form-group">
+            <label>First Name</label>
+            <input class="form-control" id="eoFirstName" type="text" required>
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input class="form-control" id="eoLastName" type="text" required>
+        </div>
+        <div class="form-group">
+            <label>Organization Name</label>
+            <input class="form-control" id="organization" type="text" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Register EO</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('eoForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const err = document.getElementById('eoError');
+        err.style.display = 'none';
+        if (eoPassword.value !== eoConfirm.value) {
+            err.textContent = 'Passwords do not match.';
+            err.style.display = 'block';
+            return;
+        }
+
+        const eoData = {
+            email: eoEmail.value,
+            password: eoPassword.value,
+            firstName: eoFirstName.value,
+            lastName: eoLastName.value,
+            organization: organization.value,
+        };
+
+        const res = await fetch('/api/auth/register-EO', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(eoData)
+        });
+
+        const msg = await res.text();
+        if (res.ok) {
+            alert("Event Organizer registered successfully");
+            window.location.href = "/api/auth/login";
+        } else {
+            err.textContent = msg;
+            err.style.display = 'block';
+        }
+    });
+</script>
+</body>
+</html>

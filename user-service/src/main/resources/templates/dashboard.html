@@ -1,39 +1,61 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Dashboard</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Participant Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">My App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/dashboard">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/profile">Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/logout">Logout</a>
-            </li>
-        </ul>
+<body class="bg-gradient-to-br from-indigo-700 to-purple-800 text-white min-h-screen font-sans">
+
+<nav class="bg-white text-indigo-700 py-4 shadow-md">
+    <div class="container mx-auto flex justify-between items-center px-4">
+        <h1 class="text-2xl font-bold">Participant Dashboard</h1>
+        <button id="logoutBtn" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Logout</button>
     </div>
 </nav>
-<div class="container">
-    <h2>Welcome, <span th:text="${user.firstName} + ' ' + ${user.lastName}"></span></h2>
-    <p>Email: <span th:text="${user.email}"></span></p>
-</div>
-<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+
+<main class="container mx-auto mt-10 px-4">
+    <div class="bg-white/10 p-6 rounded-xl shadow-lg max-w-2xl mx-auto">
+        <h2 class="text-2xl font-bold mb-6 text-center">Welcome, <span id="userFullName"></span>!</h2>
+        <div class="space-y-4">
+            <p><strong>Email:</strong> <span id="userEmail"></span></p>
+            <p><strong>User Type:</strong> <span id="userType"></span></p>
+            <p><strong>First Name:</strong> <span id="userFirstName"></span></p>
+            <p><strong>Last Name:</strong> <span id="userLastName"></span></p>
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const email = sessionStorage.getItem("email");  // Assume stored during login
+      if (!email) {
+        window.location.href = "/api/auth/login";
+        return;
+      }
+
+      try {
+        const res = await fetch(`users/email/${email}`); // You may need to add this endpoint
+        if (!res.ok) throw new Error("Failed to fetch user data");
+        const user = await res.json();
+
+        document.getElementById("userFullName").textContent = `${user.firstName} ${user.lastName}`;
+        document.getElementById("userEmail").textContent = user.email;
+        document.getElementById("userType").textContent = user.type;
+        document.getElementById("userFirstName").textContent = user.firstName;
+        document.getElementById("userLastName").textContent = user.lastName;
+      } catch (err) {
+        alert("Could not load user data.");
+        console.error(err);
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      sessionStorage.clear();
+      window.location.href = "/api/auth/login";
+    });
+</script>
+
 </body>
 </html>

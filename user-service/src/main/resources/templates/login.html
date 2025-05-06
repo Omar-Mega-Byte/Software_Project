@@ -1,69 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<header>
-    <div class="container">
-        <h1>My App</h1>
-    </div>
-</header>
-<div class="container">
-    <div class="form-container">
-        <h2>Login</h2>
-        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
-        <form th:action="@{/login}" method="post" id="loginForm">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                    </div>
-                    <input type="email" class="form-control" id="email" name="email" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                    </div>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                            <i class="far fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
-                <label class="form-check-label" for="rememberMe">Remember me</label>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
-        </form>
-        <p class="text-center mt-3">Don't have an account? <a href="/register">Register here</a></p>
-    </div>
+<body class="bg-gradient-to-r from-indigo-500 to-purple-600 min-h-screen flex items-center justify-center">
+<div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-center text-indigo-700">Login</h2>
+    <form id="loginForm" class="space-y-4">
+        <input type="email" id="email" placeholder="Email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <input type="password" id="password" placeholder="Password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">Login</button>
+    </form>
+    <p id="errorMsg" class="text-red-500 text-sm mt-4 text-center hidden">Invalid email or password.</p>
 </div>
-<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+
 <script>
-    document.getElementById('togglePassword').addEventListener('click', function() {
-        var passwordInput = document.getElementById('password');
-        var eyeIcon = this.querySelector('i');
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            eyeIcon.classList.remove('far', 'fa-eye');
-            eyeIcon.classList.add('far', 'fa-eye-slash');
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // Store the email and user type in session storage
+          sessionStorage.setItem('loggedIn', 'true');
+          sessionStorage.setItem('email', email);
+          sessionStorage.setItem('userType', result.type);
+
+          // Redirect based on user type
+          if (result.type === 'Participant') {
+            window.location.href = '/api/auth';  // Redirect to the Participant Dashboard
+          } else if (result.type === 'EventOrganizer') {
+            window.location.href = '/events/events';  // Redirect to the Event Organizer Dashboard
+          }
         } else {
-            passwordInput.type = 'password';
-            eyeIcon.classList.remove('far', 'fa-eye-slash');
-            eyeIcon.classList.add('far', 'fa-eye');
+          document.getElementById('errorMsg').classList.remove('hidden');
         }
+      } catch (error) {
+        console.error('Login failed:', error);
+        document.getElementById('errorMsg').classList.remove('hidden');
+      }
     });
 </script>
 </body>

@@ -1,10 +1,138 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        header h1 {
+            font-size: 2rem;
+            color: #1e3c72;
+            text-align: center;
+            margin: 0;
+            font-weight: 600;
+        }
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-container {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            margin-top: 100px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .form-container h2 {
+            font-size: 1.8rem;
+            color: #1e3c72;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .input-group {
+            position: relative;
+        }
+        .input-group .form-control {
+            border-radius: 8px;
+            padding: 12px 12px 12px 45px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        .input-group .form-control:focus {
+            border-color: #1e3c72;
+            box-shadow: 0 0 8px rgba(30, 60, 114, 0.2);
+        }
+        .input-group-prepend .input-group-text {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            padding: 12px;
+            color: #1e3c72;
+        }
+        .input-group-append .btn {
+            border-radius: 0 8px 8px 0;
+            border: 1px solid #ddd;
+            border-left: none;
+            background: #f5f5f5;
+            color: #1e3c72;
+            transition: background 0.3s ease;
+        }
+        .input-group-append .btn:hover {
+            background: #e0e0e0;
+        }
+        .btn-primary {
+            background: #1e3c72;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: #2a5298;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .text-center a {
+            color: #1e3c72;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .text-center a:hover {
+            color: #2a5298;
+            text-decoration: underline;
+        }
+        .alert-danger {
+            background: rgba(255, 75, 75, 0.2);
+            border: 1px solid rgba(255, 75, 75, 0.4);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            color: #ff4b4b;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -15,14 +143,15 @@
 <div class="container">
     <div class="form-container">
         <h2>Register</h2>
-        <form th:action="@{/register}" method="post" id="registerForm">
+        <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
+        <form id="registerForm">
             <div class="form-group">
                 <label for="email">Email</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                     </div>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
                 </div>
             </div>
             <div class="form-group">
@@ -31,7 +160,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
                     </div>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                             <i class="far fa-eye"></i>
@@ -45,7 +174,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
                     </div>
-                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
                 </div>
             </div>
             <div class="form-group">
@@ -54,7 +183,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter your first name" required>
                 </div>
             </div>
             <div class="form-group">
@@ -63,7 +192,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter your last name" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Register</button>
@@ -71,12 +200,13 @@
         <p class="text-center mt-3">Already have an account? <a href="/login">Login here</a></p>
     </div>
 </div>
-<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
+    // Password toggle functionality
     document.getElementById('togglePassword').addEventListener('click', function() {
-        var passwordInput = document.getElementById('password');
-        var eyeIcon = this.querySelector('i');
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = this.querySelector('i');
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text';
             eyeIcon.classList.remove('far', 'fa-eye');
@@ -87,12 +217,63 @@
             eyeIcon.classList.add('far', 'fa-eye');
         }
     });
-    document.getElementById('registerForm').addEventListener('submit', function(event) {
-        var password = document.getElementById('password').value;
-        var confirmPassword = document.getElementById('confirmPassword').value;
+
+    // Form submission handling
+    document.getElementById('registerForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent default form submission
+        console.log('Form submission triggered'); // Debug log
+
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Clear previous error messages
+        errorMessage.style.display = 'none';
+        errorMessage.textContent = '';
+
+        // Validate passwords match
         if (password !== confirmPassword) {
-            alert('Passwords do not match');
-            event.preventDefault();
+            errorMessage.textContent = 'Passwords do not match';
+            errorMessage.style.display = 'block';
+            console.log('Password mismatch'); // Debug log
+            return;
+        }
+
+        // Prepare form data
+        const formData = {
+            email: document.getElementById('email').value,
+            password: password,
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value
+        };
+        console.log('Form data:', formData); // Debug log
+
+        try {
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            console.log('Response status:', response.status); // Debug log
+            const data = await response.text();
+
+            if (response.ok) {
+                console.log('Registration successful:', data); // Debug log
+                alert('User registered successfully');
+                window.location.href = '/login';
+            } else {
+                console.error('Registration failed:', data); // Debug log
+                errorMessage.textContent = data || 'Failed to register';
+                errorMessage.style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error during registration:', error); // Debug log
+            errorMessage.textContent = 'Failed to register. Please try again.';
+            errorMessage.style.display = 'block';
         }
     });
 </script>

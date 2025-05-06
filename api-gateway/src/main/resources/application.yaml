@@ -7,22 +7,30 @@ spring:
   main:
     web-application-type: reactive
   cloud:
+    loadbalancer:
+      enabled: true
     gateway:
       routes:
         - id: event-service
           uri: lb://EVENT-SERVICE
           predicates:
             - Path=/events/**
+          filters:
+            - StripPrefix=1
 
-        - id: auth-service-ui
-          uri: lb://AUTH-SERVICE
-          predicates:
-            - Path=/register, /login, /index, /logout
-
-        - id: auth-service-api
-          uri: lb://AUTH-SERVICE
+        - id: user-service
+          uri: lb://USER-SERVICE
           predicates:
             - Path=/api/auth/**
+          filters:
+            - StripPrefix=2
+
+        - id: registration-service
+          uri: lb://REGISTRATION-SERVICE
+          predicates:
+            - Path=/api/registrations/**
+          filters:
+            - StripPrefix=2
 
 eureka:
   client:

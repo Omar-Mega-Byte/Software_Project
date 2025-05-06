@@ -1,170 +1,242 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Event</title>
+    <title>Create/Edit Event</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #2B4A8F 0%, #1A1A1A 80%);
+            min-height: 100vh;
+            color: white;
         }
 
-        .form-container {
-            background: white;
-            border-radius: 1rem;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.5s ease-out;
+        .glassmorphic-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .input-field {
-            transition: all 0.3s ease;
-            border: 2px solid #e5e7eb;
-        }
-
-        .input-field:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-            outline: none;
-        }
-
-        .input-field:invalid:focus {
-            border-color: #ef4444;
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
-        }
-
-        .button-submit {
-            background: linear-gradient(to right, #3b82f6, #2563eb);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .button-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(59, 130, 246, 0.3);
-        }
-
-        .button-submit::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.2),
-                transparent
-            );
-            transition: 0.5s;
-        }
-
-        .button-submit:hover::after {
-            left: 100%;
-        }
-
-        .label-icon {
+        .header-icon {
             transition: transform 0.3s ease;
         }
 
-        .label-icon:hover {
+        .header-icon:hover {
             transform: scale(1.2);
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .form-input {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
         }
 
-        @media (max-width: 640px) {
-            .form-container {
-                margin: 0 1rem;
-            }
+        .form-input:focus {
+            outline: none;
+            border-color: #FF6B6B;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .submit-btn {
+            background: linear-gradient(to right, #FF6B6B, #FF8E53);
+            transition: transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .cancel-btn {
+            background: rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.6s ease-out;
         }
     </style>
 </head>
-<body class="min-h-screen">
-<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <h1 class="text-4xl md:text-5xl font-bold text-blue-800 text-center mb-8 flex items-center justify-center animate-fadeIn">
-        <i class="fas fa-calendar-plus mr-3 text-blue-500 label-icon"></i>
-        <span th:text="${event.id != null ? 'Edit Event' : 'Create Event'}"></span>
-    </h1>
+<body class="p-8">
+<div class="max-w-3xl mx-auto">
+    <h1 id="formTitle" class="text-4xl font-bold text-white mb-6 animate-fadeIn">Create Event</h1>
 
-    <form action="#" th:action="@{${event.id != null ? '/events/' + event.id : '/events'}}" method="post" class="form-container p-8 space-y-6">
-        <div class="mb-6">
-            <label for="title" class="block text-lg font-medium text-gray-700 flex items-center">
-                <i class="fas fa-heading mr-2 text-blue-500 label-icon"></i>Title
-            </label>
-            <input type="text" id="title" name="title" th:value="${event.title}" class="input-field w-full p-4 mt-2 rounded-lg" required>
-        </div>
+    <div class="glassmorphic-container p-8">
+        <form id="eventForm" class="space-y-6">
+            <div>
+                <label for="title" class="block text-lg font-medium text-white">
+                    <i class="fas fa-heading mr-2 text-blue-500 header-icon"></i>Title
+                </label>
+                <input type="text" id="title" name="title" required
+                       class="form-input mt-1 block w-full py-3 px-4 rounded-lg placeholder-white/70">
+            </div>
 
-        <div class="mb-6">
-            <label for="description" class="block text-lg font-medium text-gray-700 flex items-center">
-                <i class="fas fa-align-left mr-2 text-blue-500 label-icon"></i>Description
-            </label>
-            <textarea id="description" name="description" class="input-field w-full p-4 mt-2 rounded-lg" rows="5" required th:text="${event.description}"></textarea>
-        </div>
+            <div>
+                <label for="description" class="block text-lg font-medium text-white">
+                    <i class="fas fa-align-left mr-2 text-blue-500 header-icon"></i>Description
+                </label>
+                <textarea id="description" name="description"
+                          class="form-input mt-1 block w-full py-3 px-4 rounded-lg placeholder-white/70 h-32"></textarea>
+            </div>
 
-        <div class="mb-6">
-            <label for="dateTime" class="block text-lg font-medium text-gray-700 flex items-center">
-                <i class="far fa-calendar-alt mr-2 text-blue-500 label-icon"></i>Date & Time
-            </label>
-            <input type="datetime-local" id="dateTime" name="dateTime" th:value="${event.dateTime}" class="input-field w-full p-4 mt-2 rounded-lg" required>
-        </div>
+            <div>
+                <label for="dateTime" class="block text-lg font-medium text-white">
+                    <i class="fas fa-calendar-alt mr-2 text-blue-500 header-icon"></i>Date & Time
+                </label>
+                <input type="datetime-local" id="dateTime" name="dateTime" required
+                       class="form-input mt-1 block w-full py-3 px-4 rounded-lg">
+            </div>
 
-        <div class="mb-6">
-            <label for="location" class="block text-lg font-medium text-gray-700 flex items-center">
-                <i class="fas fa-map-marker-alt mr-2 text-blue-500 label-icon"></i>Location
-            </label>
-            <input type="text" id="location" name="location" th:value="${event.location}" class="input-field w-full p-4 mt-2 rounded-lg" required>
-        </div>
+            <div>
+                <label for="location" class="block text-lg font-medium text-white">
+                    <i class="fas fa-map-marker-alt mr-2 text-blue-500 header-icon"></i>Location
+                </label>
+                <input type="text" id="location" name="location" required
+                       class="form-input mt-1 block w-full py-3 px-4 rounded-lg placeholder-white/70">
+            </div>
 
-        <div class="mb-6">
-            <label for="maxSeats" class="block text-lg font-medium text-gray-700 flex items-center">
-                <i class="fas fa-chair mr-2 text-blue-500 label-icon"></i>Max Seats
-            </label>
-            <input type="number" id="maxSeats" name="maxSeats" th:value="${event.maxSeats}" class="input-field w-full p-4 mt-2 rounded-lg" required min="1">
-        </div>
+            <div>
+                <label for="availableSeats" class="block text-lg font-medium text-white">
+                    <i class="fas fa-chair mr-2 text-blue-500 header-icon"></i>Available Seats
+                </label>
+                <input type="number" id="availableSeats" name="availableSeats" required min="0"
+                       class="form-input mt-1 block w-full py-3 px-4 rounded-lg">
+            </div>
 
-        <div class="mb-6">
-            <label for="availableSeats" class="block text-lg font-medium text-gray-700 flex items-center">
-                <i class="fas fa-ticket-alt mr-2 text-blue-500 label-icon"></i>Available Seats
-            </label>
-            <input type="number" id="availableSeats" name="availableSeats" th:value="${event.availableSeats}" class="input-field w-full p-4 mt-2 rounded-lg" required min="0">
-        </div>
+            <div>
+                <label for="maxSeats" class="block text-lg font-medium text-white">
+                    <i class="fas fa-users mr-2 text-blue-500 header-icon"></i>Max Seats
+                </label>
+                <input type="number" id="maxSeats" name="maxSeats" required min="1"
+                       class="form-input mt-1 block w-full py-3 px-4 rounded-lg">
+            </div>
 
-        <div class="mb-6">
-            <button type="submit" class="button-submit w-full py-3 px-6 text-white rounded-lg font-medium flex items-center justify-center">
-                <i class="fas fa-check-circle mr-2"></i>Submit
-            </button>
-        </div>
-    </form>
+            <div>
+                <label for="canceled" class="block text-lg font-medium text-white">
+                    <i class="fas fa-ban mr-2 text-blue-500 header-icon"></i>Canceled
+                </label>
+                <input type="checkbox" id="canceled" name="canceled"
+                       class="mt-1 h-5 w-5 text-blue-500 focus:ring-blue-500 border-gray-300 rounded">
+            </div>
+
+            <div class="flex space-x-4">
+                <button type="submit" class="submit-btn text-white py-3 px-8 rounded-lg font-medium inline-flex items-center">
+                    <i class="fas fa-save mr-2"></i>Save Event
+                </button>
+                <a href="/events" class="cancel-btn text-white py-3 px-8 rounded-lg font-medium inline-flex items-center">
+                    <i class="fas fa-times mr-2"></i>Cancel
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script>
-    // Client-side validation feedback
-    const inputs = document.querySelectorAll('.input-field');
-    inputs.forEach(input => {
-        input.addEventListener('input', function() {
-            if (input.checkValidity()) {
-                input.classList.remove('border-red-500');
-                input.classList.add('border-green-500');
-            } else {
-                input.classList.remove('border-green-500');
-                input.classList.add('border-red-500');
+    // Function to format date for datetime-local input
+    function formatDateForInput(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toISOString().slice(0, 16); // e.g., 2025-04-29T15:00
+    }
+
+    // Function to load event data for editing
+    async function loadEventData() {
+        const path = window.location.pathname;
+        const isEdit = path.includes('/edit');
+        const formTitle = document.getElementById('formTitle');
+        formTitle.textContent = isEdit ? 'Edit Event' : 'Create Event';
+
+        if (isEdit) {
+            try {
+                // Extract eventId from /events/{id}/edit or /events/api/events/{id}/edit
+                const segments = path.split('/');
+                const eventId = segments[segments.length - 2];
+                const response = await fetch(`/events/api/events/${eventId}`, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (!response.ok) throw new Error('Failed to fetch event');
+                const event = await response.json();
+
+                // Debug: Log canceled value
+                console.log(`Event ${event.title}: canceled = ${event.canceled}, type = ${typeof event.canceled}`);
+
+                // Populate form fields
+                document.getElementById('title').value = event.title || '';
+                document.getElementById('description').value = event.description || '';
+                document.getElementById('dateTime').value = formatDateForInput(event.dateTime);
+                document.getElementById('location').value = event.location || '';
+                document.getElementById('availableSeats').value = event.availableSeats ?? '';
+                document.getElementById('maxSeats').value = event.maxSeats ?? '';
+                document.getElementById('canceled').checked = event.canceled === true;
+            } catch (error) {
+                console.error('Error loading event:', error);
+                alert('Failed to load event data. Please try again later.');
             }
-        });
+        }
+    }
+
+    // Function to handle form submission
+    async function handleFormSubmit(event) {
+        event.preventDefault();
+        const path = window.location.pathname;
+        const isEdit = path.includes('/edit');
+        let eventId;
+        if (isEdit) {
+            const segments = path.split('/');
+            eventId = segments[segments.length - 2];
+        }
+
+        const formData = {
+            title: document.getElementById('title').value,
+            description: document.getElementById('description').value,
+            dateTime: new Date(document.getElementById('dateTime').value).toISOString(),
+            location: document.getElementById('location').value,
+            availableSeats: parseInt(document.getElementById('availableSeats').value),
+            maxSeats: parseInt(document.getElementById('maxSeats').value),
+            canceled: document.getElementById('canceled').checked
+        };
+
+        try {
+            const url = isEdit ? `/events/api/events/${eventId}` : '/events/api/events';
+            const method = isEdit ? 'PUT' : 'POST';
+            const response = await fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) throw new Error(`Failed to ${isEdit ? 'update' : 'create'} event`);
+            alert(`Event ${isEdit ? 'updated' : 'created'} successfully`);
+            window.location.href = '/events/events';
+        } catch (error) {
+            console.error(`Error ${isEdit ? 'updating' : 'creating'} event:`, error);
+            alert(`Failed to ${isEdit ? 'update' : 'create'} event. Please try again.`);
+        }
+    }
+
+    // Initialize form
+    document.addEventListener('DOMContentLoaded', () => {
+        loadEventData();
+        document.getElementById('eventForm').addEventListener('submit', handleFormSubmit);
     });
 </script>
 </body>

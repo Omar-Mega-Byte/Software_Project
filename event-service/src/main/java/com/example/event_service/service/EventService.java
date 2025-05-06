@@ -35,6 +35,8 @@ public class EventService {
         event.setDateTime(eventDetails.getDateTime());
         event.setLocation(eventDetails.getLocation());
         event.setMaxSeats(eventDetails.getMaxSeats());
+        event.setAvailableSeats(eventDetails.getAvailableSeats());
+        event.setIsCanceled(eventDetails.isCanceled());
         return eventRepository.save(event);
     }
 

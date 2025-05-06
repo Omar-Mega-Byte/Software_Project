@@ -1,4 +1,7 @@
 spring:
+  cloud:
+    loadbalancer:
+      enabled: false
   application:
     name: event-service
   datasource:

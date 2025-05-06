@@ -1,40 +1,113 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Home</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+          font-family: 'Inter', sans-serif;
+          background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+          min-height: 100vh;
+          margin: 0;
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">My App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/dashboard">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/profile">Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/logout">Logout</a>
-            </li>
-        </ul>
+<nav class="bg-white shadow-md p-4 flex justify-between items-center fixed top-0 w-full z-10">
+    <div class="text-indigo-700 font-bold text-xl">My App</div>
+    <div class="space-x-4">
+        <a href="/api/auth/" class="text-gray-600 hover:text-indigo-600 font-medium">Home</a>
+        <a href="/api/auth/dashboard" class="text-gray-600 hover:text-indigo-600 font-medium">Dashboard</a>
+        <a href="#" id="logoutLink" class="text-gray-600 hover:text-red-600 font-medium">Logout</a>
     </div>
 </nav>
-<div class="container">
-    <h2>Welcome to the Home Page</h2>
-    <p>You have successfully logged in!</p>
-    <a th:href="@{/logout}" class="btn btn-secondary">Logout</a>
-</div>
-<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+
+<main class="max-w-4xl mx-auto mt-28 bg-white p-8 rounded-xl shadow-2xl">
+    <h1 class="text-3xl font-bold text-indigo-600 mb-4">Welcome to the Dashboard</h1>
+    <p class="text-gray-600 mb-6">Here are your upcoming events:</p>
+
+    <div id="eventList" class="space-y-4">
+        <!-- Events will be loaded here -->
+    </div>
+</main>
+
+<script>
+    // Protect the page
+    if (!sessionStorage.getItem('loggedIn')) {
+      window.location.href = '/api/auth/login';
+    }
+
+    document.getElementById('logoutLink').addEventListener('click', function () {
+      sessionStorage.clear();
+      window.location.href = '/api/auth/login';
+    });
+
+    // Load events
+    async function loadEvents() {
+      try {
+        const res = await fetch('/events/api/events/available');
+        const events = await res.json();
+        const container = document.getElementById('eventList');
+        container.innerHTML = '';
+
+        if (events.length === 0) {
+          container.innerHTML = '<p class="text-gray-500">No events available.</p>';
+          return;
+        }
+
+        events.forEach(event => {
+          const isCanceled = event.canceled;
+          const div = document.createElement('div');
+          div.className = 'p-4 bg-gray-100 rounded-lg shadow-md';
+          div.innerHTML = `
+            <h3 class="text-xl font-semibold text-indigo-700">${event.title}</h3>
+            <p class="text-gray-600">${event.location}</p>
+            <p class="text-sm text-gray-500">Date: ${new Date(event.dateTime).toLocaleString()}</p>
+            <span class="text-xs font-bold px-2 py-1 rounded-full ${
+              isCanceled ? 'bg-red-200 text-red-700' : 'bg-green-200 text-green-700'
+            }">${isCanceled ? 'Canceled' : 'Active'}</span>
+            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:bg-gray-400"
+                    data-event-id="${event.id}"
+                    ${isCanceled ? 'disabled' : ''}
+                    onclick="registerForEvent(${event.id})">
+                Register
+            </button>
+          `;
+          container.appendChild(div);
+        });
+      } catch (error) {
+        console.error('Error loading events:', error);
+        document.getElementById('eventList').innerHTML = '<p class="text-red-600">Error loading events.</p>';
+      }
+    }
+
+    // Register for an event
+    async function registerForEvent(eventId) {
+      try {
+        const userId = sessionStorage.getItem('userId') || 1; // Placeholder, replace with actual user ID
+        console.log(`Attempting to register user ${userId} for event ${eventId}`);
+        const res = await fetch('/api/registrations/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ eventId, userId }),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          alert('Successfully registered for the event!');
+        } else {
+          throw new Error(data.message || 'Registration failed');
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        alert(`Error: ${error.message}`);
+      }
+    }
+
+    window.onload = loadEvents;
+</script>
 </body>
 </html>

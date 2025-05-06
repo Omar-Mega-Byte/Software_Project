@@ -1,4 +1,7 @@
 spring:
+  cloud:
+    loadbalancer:
+      enabled: false
   application:
     name: user-service
   datasource:
@@ -22,7 +25,6 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-
 
 server:
   port: 8082
