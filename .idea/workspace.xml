@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="14caa814-671e-4a5f-9194-cb9c70c779ff" name="Changes" comment="على بركة الله">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/templates/register.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,29 +50,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ApiGatewayApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.EurekaServerApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.EventServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.GatewayServerApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RegistrationServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SeProjectApplication.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.All in eureka-server.executor&quot;: &quot;Coverage&quot;,
-    &quot;Maven.event-service [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.event-service [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.event-service [install].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/d_tol/Desktop/L.3 - second term/SE2/Software_Engineering Project&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ApiGatewayApplication.executor": "Run",
+    "Application.EurekaServerApplication.executor": "Run",
+    "Application.EventServiceApplication.executor": "Run",
+    "Application.GatewayServerApplication.executor": "Run",
+    "Application.RegistrationServiceApplication.executor": "Run",
+    "Application.SeProjectApplication.executor": "Run",
+    "JUnit.All in eureka-server.executor": "Coverage",
+    "Maven.event-service [clean].executor": "Run",
+    "Maven.event-service [compile].executor": "Run",
+    "Maven.event-service [install].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/d_tol/Desktop/Depi - Software Testing/Depi Automation",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\d_tol\Desktop\L.3 - second term\SE2\Software_Engineering Project\registration-service\src\main\resources\static" />
@@ -182,7 +183,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746536078249</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="على بركة الله">
+      <option name="closed" value="true" />
+      <created>1746618070569</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1746618070569</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

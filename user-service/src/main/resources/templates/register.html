@@ -264,7 +264,7 @@
             if (response.ok) {
                 console.log('Registration successful:', data); // Debug log
                 alert('User registered successfully');
-                window.location.href = '/login';
+                window.location.href = '/api/auth/login';
             } else {
                 console.error('Registration failed:', data); // Debug log
                 errorMessage.textContent = data || 'Failed to register';
