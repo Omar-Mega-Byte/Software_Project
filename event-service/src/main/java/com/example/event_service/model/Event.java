@@ -37,6 +37,7 @@ public class Event {
     private String location;
 
     @Min(value = 1, message = "Maximum seats must be at least 1")
+    @Max(value = 10000, message = "Maximum seats can't be more than 10000")
     @NotNull(message = "Maximum seats are required")
     private Integer maxSeats;
 
