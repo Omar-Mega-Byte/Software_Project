@@ -155,6 +155,21 @@
         return date.toISOString().slice(0, 16); // e.g., 2025-04-29T15:00
     }
 
+    // Function to fetch user ID by email
+    async function fetchUserId(email) {
+        try {
+            const response = await fetch(`/api/auth/users/email/${email}`, {
+                headers: { 'Accept': 'application/json' }
+            });
+            if (!response.ok) throw new Error('Failed to fetch user data');
+            const user = await response.json();
+            return user.id;
+        } catch (error) {
+            console.error('Error fetching user ID:', error);
+            throw error;
+        }
+    }
+
     // Function to load event data for editing
     async function loadEventData() {
         const path = window.location.pathname;
@@ -202,6 +217,21 @@
             eventId = segments[segments.length - 2];
         }
 
+        const email = sessionStorage.getItem('email');
+        if (!email) {
+            alert('User not logged in. Please log in and try again.');
+            window.location.href = '/api/auth/login';
+            return;
+        }
+
+        let organizerId;
+        try {
+            organizerId = await fetchUserId(email);
+        } catch (error) {
+            alert('Failed to fetch user data. Please try again.');
+            return;
+        }
+
         const formData = {
             title: document.getElementById('title').value,
             description: document.getElementById('description').value,
@@ -209,7 +239,8 @@
             location: document.getElementById('location').value,
             availableSeats: parseInt(document.getElementById('availableSeats').value),
             maxSeats: parseInt(document.getElementById('maxSeats').value),
-            canceled: document.getElementById('canceled').checked
+            canceled: document.getElementById('canceled').checked,
+            organizerId: isEdit ? undefined : organizerId // Only include organizerId for new events
         };
 
         try {
